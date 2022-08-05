@@ -1,0 +1,35 @@
+{% extends 'master.html' %}
+{% block content %}
+
+
+<div class="col-12 mt-5">
+    <div class="table">
+        <div class="table">
+            <h4 class="header-title">Bootstrap Datat</h4>
+            <div id="chartdiv2"></div>
+</div>
+</div>
+</div>
+<div class="col-12 mt-5">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="header-title">Week Wise Form Card</h4>
+            <div class="data-tables">
+                <table id="dataTable" class="text-center">
+                    <body>
+
+                        {% for table in tables %}
+                          {{titles[loop.index]}}
+                           {{ table|safe }}
+                            {% endfor %}
+                    </body>
+                    <thead class="bg-light text-capitalize">
+
+                    </thead>
+
+                </table>
+            </div>
+</div>
+</div>
+</div>
+{% endblock %}
