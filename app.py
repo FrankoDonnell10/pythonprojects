@@ -114,7 +114,7 @@ def createH2Hweekly(LeaderboardDf,playerlist):
     for player in playerlist:
         singleplayerlist=[]
         singleplayerlist.append(player)
-        for GW in range(TotalGw ,TotalGw-26,-1):
+        for GW in range(TotalGw ,TotalGw-38,1):
             ply = LeaderboardDf.loc[(LeaderboardDf['GW']==GW) & (LeaderboardDf['PlayerName']==player), 'H2Hpoints'].item()
 
             singleplayerlist.append(ply)
@@ -123,7 +123,7 @@ def createH2Hweekly(LeaderboardDf,playerlist):
 
 
         columnames=['PlayerName']
-        fullnames = columnames + ['GW' + str(i) for i in range(TotalGw , TotalGw-26,-1)]
+        fullnames = columnames + ['GW' + str(i) for i in range(TotalGw , TotalGw-38,1)]
 
         H2Hweekly = pd.DataFrame(H2Hweeklylist,columns=fullnames)
 
@@ -182,18 +182,18 @@ def LeagueDatafetch():
     H2Htitles = H2Hweekly.columns.values, Avglist=Avglist,tables1=RankDf1,titles1=RankDf1.columns.values,leagueid=leagueid )
 
 
-@app.route('/WeeklyReport',methods=['POST'])
+app.route('/WeeklyReport',methods=['POST'])
 def WeeklyReport():
-    leagueid = request.form['hdfleagueid']
-    finalDataFrame = GetAndAppendAllToOneJson(leagueid)
-    LeaderboardDf = createleaderboard(finalDataFrame)
-    playerlist = LeaderboardDf['PlayerName'].unique()
-    H2Hweekly = createH2Hweekly(LeaderboardDf,playerlist)
-    GWWeekly = createGWweekly(LeaderboardDf)
+   leagueid = request.form['hdfleagueid']
+   finalDataFrame = GetAndAppendAllToOneJson(leagueid)
+   LeaderboardDf = createleaderboard(finalDataFrame)
+   playerlist = LeaderboardDf['PlayerName'].unique()
+   H2Hweekly = createH2Hweekly(LeaderboardDf,playerlist)
+   GWWeekly = createGWweekly(LeaderboardDf)
 
-    #return render_template('test.html', H2Hweekly=H2Hweekly)
-    return render_template('Weekly.html',H2Hweekly=H2Hweekly,
-    H2Htitles = H2Hweekly.columns.values, GWWeekly = GWWeekly ,playerlist=playerlist.tolist())
+   #return render_template('test.html', H2Hweekly=H2Hweekly)
+   return render_template('Weekly.html',H2Hweekly=H2Hweekly,
+   H2Htitles = H2Hweekly.columns.values, GWWeekly = GWWeekly ,playerlist=playerlist.tolist())
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=8080, debug=True,threaded=True)
