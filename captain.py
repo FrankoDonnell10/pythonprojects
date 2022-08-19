@@ -2,10 +2,24 @@
 import requests
 import pandas as pd
 import numpy as np
-playerid = 251256
+#playeridlist = ['251256', '5225028']
 url = 'https://fantasy.premierleague.com/api/entry/251256/event/1/picks/'
 
-
+#currently works with a hardcoded id, trying to iterate through multiple ids 
+#Function to generate url endpoint for api potentially)
+#def GetEndpoints():
+#    apis = []
+#    baseEndpoint = "'https://fantasy.premierleague.com/api/entry/"
+#    for i in list['251256', '5225028']:
+#        if i == 1 :
+#          #print(baseEndpoint)
+#          apis.append(baseEndpoint)
+#        else:
+#            apiEndpoint = baseEndpoint + str(i) + "/event/1/"
+#            #print(apiEndpoint)
+#            apis.append(apiEndpoint)
+#    return apis
+#
 r = requests.get(url)
 json = r.json()
 json.keys()
