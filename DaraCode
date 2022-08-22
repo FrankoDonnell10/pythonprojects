@@ -1,0 +1,77 @@
+#imports
+import requests
+import pandas as pd
+import numpy as np
+#playeridlist = ['251256', '5225028']
+url = 'https://fantasy.premierleague.com/api/entry/251256/event/1/picks/'
+playerIds = ['5225028','251256']
+slim_captain_df = []
+#currently works with a hardcoded id, trying to iterate through multiple ids 
+#Function to generate url endpoint for api potentially)
+def GetEndpoints():
+    apis = []
+    i = 1
+    baseEndpoint = "https://fantasy.premierleague.com/api/entry/"
+    for player in playerIds:
+        apiEndpoint = baseEndpoint + str(player) + "/event/1/picks/"
+        apis.append(apiEndpoint)
+        #print(apis)
+    return apis
+
+
+def GetResponse(urls):
+    i=1
+    #fullJson = ''
+    combinedJson1 = []
+    for url in urls:
+        #print(url)
+        r = requests.get(url)
+        json = r.json()
+        #print(r)
+        #json.keys()
+        #print(json)
+        #combinedJson = []
+        captain_df = pd.DataFrame(json['entry_history'], index=[0])
+        #if i == 1:
+        fullJson = json['entry_history']
+        #print(fullJson)
+        combinedJson1 = combinedJson1 + [fullJson]
+        #print[i]
+        slim_captain_df = captain_df[['event','points','total_points','bank',
+                                'points_on_bench','overall_rank',
+                                'event_transfers','event_transfers_cost','value','bank']]
+                                
+        i=i+1
+        #print(i)
+    #else:
+        #slim_captain_df['playerid'] = 251256
+        #print(slim_captain_df)
+        #slim_captain_df['playerid'] = 5225028
+        #print(slim_captain_df)
+        #slim_captain_df['playerid'] = 251256
+        #slim_captain_Combined_df += slim_captain_df
+    print(combinedJson1)
+    return combinedJson1
+
+
+
+#will need to join with list of players data set to get players name
+#get unique player list left join onto captain_df on playerid one to many: player name field
+#get data for one particular user hard coded
+
+#get data for one week hardcoded
+
+
+#get data from multiple users in a list and append into one data set
+
+
+#get data from mutilple users and all gameweek s(1-38) and appedn to one data table
+
+
+#apply filter to filter by gameweek or by playerid
+
+aaa = GetEndpoints()
+bbb = GetResponse(aaa)
+#print(bbb)
+#print(bbb)
+#print(slim_captain_df)
